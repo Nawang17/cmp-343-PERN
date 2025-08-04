@@ -1,38 +1,67 @@
 import React from "react";
 
 const TableHeader = () => {
-  // boilerplate table header functional component
   return (
     <thead>
       <tr>
         <th>Name</th>
         <th>URL</th>
-        <th>Remove</th>
+        <th>Actions</th>
       </tr>
     </thead>
   );
 };
 
-const TableBody = ({ linkData, removeLink }) => {
+const TableBody = ({
+  linkData,
+  editingIndex,
+  editForm,
+  setEditForm,
+  startEdit,
+  cancelEdit,
+  saveEdit,
+  handleRemove,
+}) => {
   return (
     <tbody>
       {linkData.map((link, index) => (
-        <tr key={index}>
-          <td>{link.name}</td>
+        <tr key={link.id}>
           <td>
-            <a href={link.url} target="_blank" rel="noopener noreferrer">
-              {link.url}
-            </a>
+            {editingIndex === index ? (
+              <input
+                value={editForm.name}
+                onChange={(e) =>
+                  setEditForm({ ...editForm, name: e.target.value })
+                }
+              />
+            ) : (
+              link.name
+            )}
           </td>
           <td>
-            <button
-              style={{
-                backgroundColor: "red",
-              }}
-              onClick={() => removeLink(index)}
-            >
-              Delete
-            </button>
+            {editingIndex === index ? (
+              <input
+                value={editForm.url}
+                onChange={(e) =>
+                  setEditForm({ ...editForm, url: e.target.value })
+                }
+              />
+            ) : (
+              link.url
+            )}
+          </td>
+          <td>
+            {editingIndex === index ? (
+              <>
+                <button onClick={saveEdit}>Save</button>
+                <button onClick={cancelEdit}>Cancel</button>
+              </>
+            ) : (
+              <>
+                <button onClick={() => startEdit(index)}>Edit</button>
+                <button onClick={() => handleRemove(link.id)}>Delete</button>
+              </>
+            )}
           </td>
         </tr>
       ))}
@@ -40,11 +69,29 @@ const TableBody = ({ linkData, removeLink }) => {
   );
 };
 
-const Table = ({ linkData, removeLink }) => {
+const Table = ({
+  linkData,
+  editingIndex,
+  editForm,
+  setEditForm,
+  startEdit,
+  cancelEdit,
+  saveEdit,
+  handleRemove,
+}) => {
   return (
     <table>
       <TableHeader />
-      <TableBody linkData={linkData} removeLink={removeLink} />
+      <TableBody
+        linkData={linkData}
+        editingIndex={editingIndex}
+        editForm={editForm}
+        setEditForm={setEditForm}
+        startEdit={startEdit}
+        cancelEdit={cancelEdit}
+        saveEdit={saveEdit}
+        handleRemove={handleRemove}
+      />
     </table>
   );
 };
