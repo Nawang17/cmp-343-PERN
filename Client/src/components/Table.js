@@ -53,13 +53,34 @@ const TableBody = ({
           <td>
             {editingIndex === index ? (
               <>
-                <button onClick={saveEdit}>Save</button>
-                <button onClick={cancelEdit}>Cancel</button>
+                <button style={{ marginRight: "10px" }} onClick={saveEdit}>
+                  Save
+                </button>
+                <button
+                  style={{
+                    backgroundColor: "gray",
+                  }}
+                  onClick={cancelEdit}
+                >
+                  Cancel
+                </button>
               </>
             ) : (
               <>
-                <button onClick={() => startEdit(index)}>Edit</button>
-                <button onClick={() => handleRemove(link.id)}>Delete</button>
+                <button
+                  style={{ marginRight: "10px" }}
+                  onClick={() => startEdit(index)}
+                >
+                  Edit
+                </button>
+                <button
+                  style={{
+                    backgroundColor: "red",
+                  }}
+                  onClick={() => handleRemove(link.id)}
+                >
+                  Delete
+                </button>
               </>
             )}
           </td>
