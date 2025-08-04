@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
-const { getLinks, addLink, deleteLink } = require("./queries");
+const { getLinks, addLink, deleteLink, updateLink } = require("./queries");
 const app = express();
 const port = 3000;
 
@@ -17,6 +17,7 @@ app.get("/", (req, res) =>
 app.get("/links", getLinks);
 app.post("/links", addLink);
 app.delete("/links/:id", deleteLink);
+app.put("/links/:id", updateLink);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
